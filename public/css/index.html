@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>jQuery QueryBuilder</title>
+
+ 
+  <link href="bootstrap.css" rel="stylesheet">
+  <link href="query-builder.css" rel="stylesheet">
+
+ 
+
+  <script src="jquery.js"></script>
+  <script src="jQuery.extendext.js"></script>
+  <script src="moment.js"></script>
+  <script src="query-builder.js"></script>
+</head>
+
+<body>
+ <div id="builder"></div>
+
+<select name="name">
+
+<option value="dasd">sad</option>
+<option value="dasd">asddd</option>
+<option value="dasd">sdddsad</option>
+</select>
+
+
+<button id='btn-get-sql' >asdsd</button>
+<script>
+$('#builder').queryBuilder({
+  filters: [
+{
+    id: 'category',
+    label: 'Category',
+    type: 'integer',
+    input: 'select',
+    values: {
+      1: 'Books',
+      2: 'Movies',
+      3: 'Music',
+      4: 'Tools',
+      5: 'Goodies',
+      6: 'Clothes'
+    },
+    operators: ['equal', 'not_equal']
+  }
+]
+});
+
+
+ $('#btn-get-sql').on('click', function() {
+  var result = $('#builder').queryBuilder('getSQL', false, false);
+  
+  if (result.sql.length) {
+    alert(result.sql + '\n\n' );
+  }
+});
+</script>
+</body>
+</html>
+
