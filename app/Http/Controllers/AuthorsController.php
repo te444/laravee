@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App;
+use Request;
 use App\Authors as Authors;
 
 class AuthorsController extends Controller
@@ -16,29 +17,27 @@ class AuthorsController extends Controller
    
     public function index()
 {       $authors = Authors::all();
-        if(isset($_POST['authors']))
+
+        if(Request::input('authors'))
         {
-           $books= $this->hasPost();
-        return view('authors')->with('authors', $authors)
+          $books = Authors::find(Request::input('authors'))->books;
+         return view('authors')->with('authors', $authors)
                 ->with('books', $books);
         }
+        
+        if(Request::input('sql')){
+        $authors = new Authors;
+        $books= $authors->getBooksbySQL(Request::input('sql'));
+        echo json_encode($books);
+        return;
+        } 
+        
+        
         return view('authors')->with('authors', $authors);
 
 }
 
-private function hasPost(){
-    
-     $books = Authors::find($_POST['authors'])->books;
-    return $books;
-}
 
-public function bilderPost(){
-   if($_POST['sql']){
-        $authors = new Authors;
-        
-        $books= $authors->sqlBooks($_POST['sql']);
-       
-    } 
-}
+
     
 }

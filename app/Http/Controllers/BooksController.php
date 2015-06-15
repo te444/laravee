@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App;
+use Request;
 use App\Books as Books;
 use App\Categories as Categories;
 
@@ -18,32 +19,24 @@ class BooksController extends Controller
    
     public function index()
 {       $books = Books::all();
-        
-        if(isset($_POST['books']))
-        {
-           $arr= $this->hasPost();
-        return view('books')->with('books',$books )->with('authors', $arr[0])->with('categories', $arr[1]);
+        if(Request::input('books'))
+        { 
+        $authors = Books::find(Request::input('books'))->authors;
+        $categories = Books::find(Request::input('books'))->categories;
+         return view('books')->with('books',$books )->with('authors', $authors)->with('categories', $categories);
         }
+        
+        if(isset($_POST['sql'])){
+        $books = new Books;
+        $result = $books->getAuthorsAndCategoriesBySQL(Request::input('sql'));
+        echo json_encode($result);
+        return;
+    }
         return view('books')->with('books', $books);
 
 }
 
-public function hasPost(){
-    $authors = Books::find($_POST['books'])->authors;
-    $categories = Books::find($_POST['books'])->categories;
-    return array($authors,$categories);
-}
 
 
-
-public function bilderPost(){
-   if($_POST['sql']){
-       
-        $books = new Books;
-        $result= $books->sqlAuthorsAndCategories($_POST['sql']);
-       
-       
-    } 
-}
     
 }

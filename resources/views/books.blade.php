@@ -87,7 +87,7 @@ function funcok(data){
          headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
     },
-        url: 'Books_bilder',
+        url: 'books',
         type: "POST",
         data: ({
                     sql: data

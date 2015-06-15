@@ -12,11 +12,11 @@ class Categories extends Model
     }
     
     
-    public function sqlBooks($query)
+    public function getBooksbySQL($query)
     {
         $results = DB::select("SELECT name,description FROM books WHERE id IN
    (SELECT books_id FROM books_categories where $query)");
 
-   echo json_encode($results);
+   return $results;
 }
 }

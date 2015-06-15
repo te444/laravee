@@ -20,6 +20,6 @@ Route::match(['get', 'post'], 'books', 'BooksController@index');
 Route::match(['get', 'post'], 'categories', 'CategoriesController@index');
 
 
-Route::post('Authors_bilder', 'AuthorsController@bilderPost');
-Route::post('Books_bilder', 'BooksController@bilderPost');
-Route::post('Categories_bilder', 'CategoriesController@bilderPost');
+//Route::post('Authors_bilder', 'AuthorsController@bilderPost');
+//Route::post('Books_bilder', 'BooksController@bilderPost');
+//Route::post('Categories_bilder', 'CategoriesController@bilderPost');

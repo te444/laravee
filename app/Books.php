@@ -16,13 +16,14 @@ class Books extends Model
     }
     
     
-    public function sqlAuthorsAndCategories($query){
+    public function getAuthorsAndCategoriesBySQL($query){
+        
     $authors = DB::select("SELECT first_name,last_name FROM authors WHERE id IN
    (SELECT authors_id FROM authors_books where $query)");
         $categories = DB::select("SELECT name FROM categories WHERE id IN
    (SELECT categories_id FROM books_categories where $query)");
 
  $results =array_merge($categories, $authors);
-   echo json_encode($results);
+   return $results;
 }
 }
