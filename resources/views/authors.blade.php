@@ -51,39 +51,34 @@ $('#builder').queryBuilder({
 
 
 
-function funcok(data){
-   
- var res = JSON.parse(data);
- 
- $(".builder_result").html("");
-  for(var key in res){
-      $(".builder_result").append("<p>Название: <b>"+res[key]['name']+"</b> Описание: <b>"+res[key]['description']+"</b></p>");
-  }
-  }
+$('#btn-get-sql').on('click', function () {
+var result = $('#builder').queryBuilder('getSQL', false, false);
 
+var data = result.sql;
+$.ajax({
+headers: {
+'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+},
+url: 'authors',
+type: "POST",
+data: ({
+sql: data
+}),
+dataType: "html"
+}).success(function(data){
+var res = JSON.parse(data);
 
- $('#btn-get-sql').on('click', function() {
-  var result = $('#builder').queryBuilder('getSQL', false, false);
-  
-  var data = result.sql;
-  
-   $.ajax({
-         headers: {
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-    },
-        url: 'authors',
-        type: "POST",
-        data: ({
-                    sql: data
-             }),
-        dataType: "html",
-        success: funcok,
-         error:function(){
-            alert("failure");
-        }
-       
-    });
-});    
+var builderRes = $(".builder_result");
+
+builderRes.empty();
+
+for (var key in res) {
+builderRes.append("<p>Название: <b>" + res[key]['name'] + "</b> Описание: <b>" + res[key]['description'] + "</b></p>");
+}
+}).error(function(){
+alert("failure");
+});
+});
 </script>
             
             

@@ -15,11 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::match(['get', 'post'], 'authors', 'AuthorsController@index');
-Route::match(['get', 'post'], 'books', 'BooksController@index');
-Route::match(['get', 'post'], 'categories', 'CategoriesController@index');
+Route::get('authors', 'AuthorsController@index');
+Route::post('authors', 'AuthorsController@getBooks');
 
+Route::get('books', 'BooksController@index');
+Route::post('books', 'BooksController@getAuthorsCategories');
 
-//Route::post('Authors_bilder', 'AuthorsController@bilderPost');
-//Route::post('Books_bilder', 'BooksController@bilderPost');
-//Route::post('Categories_bilder', 'CategoriesController@bilderPost');
+Route::get('categories', 'CategoriesController@index');
+Route::post('categories', 'CategoriesController@getBooks');

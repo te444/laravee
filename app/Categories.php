@@ -14,8 +14,10 @@ class Categories extends Model
     
     public function getBooksbySQL($query)
     {
-        $results = DB::select("SELECT name,description FROM books WHERE id IN
+        
+          $results = DB::select("SELECT name,description FROM books WHERE id IN
    (SELECT books_id FROM books_categories where $query)");
+
 
    return $results;
 }
